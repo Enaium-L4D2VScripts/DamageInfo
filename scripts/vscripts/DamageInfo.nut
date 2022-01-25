@@ -86,7 +86,7 @@ function Notifications::OnDeath::PlayerDeath(entity, attacker, params) {
             info = lang.headshot;
         }
     } else {
-        if (config.killI) {
+        if (config.kill) {
             info = lang.kill;
         }
     }
