@@ -8,8 +8,7 @@ local configTemplate = {
     specialKill = true,
     killCount = true,
     lang = "en",
-    welcome = false,
-    name = false
+    welcome = false
 };
 
 local config = {};
