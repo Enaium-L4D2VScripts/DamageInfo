@@ -1,7 +1,6 @@
 Msg("Damage Info...");
 const configFile = "Damage Info/config";
 local configTemplate = {
-    infected = true,
     special = true,
     kill = true,
     headshot = true,
@@ -36,7 +35,7 @@ local lang = {};
 local killCount = 0;
 
 config = FileIO.LoadTable(configFile);
-if (config == null || config.infected == null || config.special == null || config.kill == null || config.headshot == null || config.specialKill == null || config.killCount == null || config.lang == null || config.welcome == null) {
+if (config == null || config.special == null || config.kill == null || config.headshot == null || config.specialKill == null || config.killCount == null || config.lang == null || config.welcome == null) {
     config = configTemplate;
 }
 
@@ -68,7 +67,7 @@ function Notifications::OnPlayerActivate::Welcome(entity, params) {
 
 function Notifications::OnInfectedHurt::AttackInfected(entity, attacker, params) {
     if (attacker.IsBot()) return;
-    if (config.infected || entity.GetClassname() == "witch") {
+    if (entity.GetClassname() == "witch") {
         ClientPrint(attacker, 4, lang.damage + ":" + params.amount);
     }
 }
@@ -129,7 +128,7 @@ function Notifications::OnSay::Command(player, text, params) {
         case "/help": {
             ClientPrint(player, 5, "/help");
             ClientPrint(player, 5, "/lang <en/zh>");
-            ClientPrint(player, 5, "/set <infected/special/kill/headshot/specialKill/killCount> <value>");
+            ClientPrint(player, 5, "/set <special/kill/headshot/specialKill/killCount> <value>");
             return;
         }
         case "/lang": {
@@ -152,12 +151,6 @@ function Notifications::OnSay::Command(player, text, params) {
         case "/set": {
             if (args[1] != null) {
                 switch (args[1]) {
-                    case "infected": {
-                        config.infected = tobool(args[2]);
-                        ClientPrint(player, 5, lang.success);
-                        FileIO.SaveTable(configFile, config);
-                        break;
-                    }
                     case "special": {
                         config.special = tobool(args[2]);
                         ClientPrint(player, 5, lang.success);
